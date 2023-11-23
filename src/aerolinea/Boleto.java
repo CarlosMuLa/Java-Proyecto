@@ -11,7 +11,7 @@ abstract class Boleto
 	protected int edadPasajero;
 	protected String numPasaporte;
 	protected LocalDateTime fecha;
-	protected float precio;
+	public float precio;
 	protected String tipoBoleto;
 	//protected Aerolinea aerolinea; falta implementar la clase aerolinea
 	
@@ -23,13 +23,13 @@ abstract class Boleto
 		numPasaporte = pasaporte;
 	}
 	
-	protected abstract void precio();
+	public abstract void precio();
 	
-	protected abstract void tipo();
+	public abstract void tipo();
 	
 	public String toString()
 	{
-		return "El boleto "+numAsiento+" para el pasajero "+nombrePasajero+" de edad "+edadPasajero+" del sexo "+sexo+" para el dia "+fecha;
+		return "El boleto "+numAsiento+" para el pasajero "+nombrePasajero+" de edad "+edadPasajero+" del sexo "+sexo+" para el dia "+fecha+" del tipo de boleto "+tipoBoleto+" por un total de "+precio;
 	}
 	
 

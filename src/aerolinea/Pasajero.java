@@ -1,6 +1,10 @@
 package aerolinea;
 
 public class Pasajero {
+
+}
+
+	/*
 		private String cedula;
 		private String nombre;
 		private String apellido;
@@ -36,4 +40,4 @@ public class Pasajero {
 		}
 
 	}
-
+*/

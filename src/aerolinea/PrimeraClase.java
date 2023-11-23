@@ -1,8 +1,8 @@
 package aerolinea;
 
-public class Economico extends Boleto {
-	
-	public Economico(String nombrePas, Boolean sex, int edad, String pasaporte)
+public class PrimeraClase extends Boleto
+{
+	public PrimeraClase(String nombrePas, Boolean sex, int edad, String pasaporte)
 	{
 		super(nombrePas,sex,edad,pasaporte);
 		tipo();
@@ -12,6 +12,7 @@ public class Economico extends Boleto {
 	@Override
 	public void precio() 
 	{
+		super.precio=0;
 	//	super.precio= precioGenerado(); Falta aqui generar el precio que va a ser conforme lo que genere el algoritmo
 		// TODO Auto-generated method stub
 
@@ -20,9 +21,10 @@ public class Economico extends Boleto {
 	@Override
 	public void tipo() 
 	{
-		super.tipoBoleto="Economico";
+		super.tipoBoleto="Primera Clase";
 		// TODO Auto-generated method stub
 
 	}
+	
 
 }
