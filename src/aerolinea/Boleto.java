@@ -12,6 +12,7 @@ abstract class Boleto
 	protected String numPasaporte;
 	protected LocalDateTime fecha;
 	public float precio;
+	
 	protected String tipoBoleto;
 	//protected Aerolinea aerolinea; falta implementar la clase aerolinea
 	

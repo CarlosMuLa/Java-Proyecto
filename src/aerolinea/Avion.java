@@ -17,7 +17,8 @@ public class Avion
 	
 	private void setModel(int i)
 	{
-		if (i>=5) {
+		if (i>=5)
+		{
 			i = 0;
 			modelostr=modelosA[i];
 		}

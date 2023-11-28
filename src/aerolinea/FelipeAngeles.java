@@ -11,7 +11,7 @@ public class FelipeAngeles
 		Avion a4 = new Avion(3);
 		Avion a5 = new Avion(4);
 		Avion a6 = new Avion(5);
-		//System.out.println(pc1);
+		System.out.println(pc1);
 		System.out.println(a1);
 		System.out.println(a2);
 		System.out.println(a3);
