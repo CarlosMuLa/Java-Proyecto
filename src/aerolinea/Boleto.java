@@ -16,12 +16,13 @@ abstract class Boleto
 	protected String tipoBoleto;
 	//protected Aerolinea aerolinea; falta implementar la clase aerolinea
 	
-	protected Boleto(String nombrePas, Boolean sex, int edad, String pasaporte)
+	protected Boleto(String nombrePas, Boolean sex, int edad, String pasaporte, int asiento)
 	{
 		nombrePasajero = nombrePas;
 		sexo = sex;
 		edadPasajero = edad;
 		numPasaporte = pasaporte;
+		numAsiento = asiento;
 	}
 	
 	public abstract void precio();
