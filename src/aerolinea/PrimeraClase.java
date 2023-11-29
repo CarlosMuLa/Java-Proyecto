@@ -2,9 +2,9 @@ package aerolinea;
 
 public class PrimeraClase extends Boleto
 {
-	public PrimeraClase(String nombrePas, Boolean sex, int edad, String pasaporte)
+	public PrimeraClase(String nombrePas, Boolean sex, int edad, String pasaporte, int asiento)
 	{
-		super(nombrePas,sex,edad,pasaporte);
+		super(nombrePas,sex,edad,pasaporte,asiento);
 		tipo();
 		precio();
 	}
