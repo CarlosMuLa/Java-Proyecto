@@ -54,7 +54,7 @@ public class AerolineaInterface extends JFrame {
 
         JButton btnNewButton = new JButton("Pagar");
         btnNewButton.setEnabled(false);
-        btnNewButton.setBounds(309, 227, 110, 23);
+        btnNewButton.setBounds(302, 214, 110, 23);
         panel.add(btnNewButton);
         btnNewButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -70,48 +70,44 @@ public class AerolineaInterface extends JFrame {
 
         JLabel lblNewLabel_6 = new JLabel("Precio del vuelo");
         lblNewLabel_6.setFont(new Font("Arial", Font.PLAIN, 12));
-        lblNewLabel_6.setBounds(319, 174, 100, 14);
+        lblNewLabel_6.setBounds(312, 161, 100, 14);
         panel.add(lblNewLabel_6);
 
         textField = new JTextField();
         textField.setEditable(false);
-        textField.setBounds(309, 196, 110, 20);
+        textField.setBounds(302, 183, 110, 20);
         panel.add(textField);
         textField.setColumns(10);
 
         JLabel lblNewLabel_2 = new JLabel("Destino");
         lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 12));
-        lblNewLabel_2.setBounds(15, 72, 46, 14);
+        lblNewLabel_2.setBounds(15, 59, 46, 14);
         panel.add(lblNewLabel_2);
 
         JComboBox<String> comboBox = new JComboBox<String>();
-        comboBox.setModel(new DefaultComboBoxModel<String>(new String[] { "", "Brazil", "Canada", "Mexico", "China" }));
+        comboBox.setModel(new DefaultComboBoxModel(new String[] {"Brazil", "Canada", "Mexico", "China"}));
         comboBox.setToolTipText("");
-        comboBox.setBounds(15, 88, 110, 22);
+        comboBox.setBounds(15, 75, 110, 22);
         panel.add(comboBox);
 
         JLabel lblNewLabel_3 = new JLabel("Asiento");
         lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 12));
-        lblNewLabel_3.setBounds(15, 121, 46, 14);
+        lblNewLabel_3.setBounds(15, 108, 46, 14);
         panel.add(lblNewLabel_3);
 
         JComboBox<String> comboBox_1 = new JComboBox<String>();
-        comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] { "", "01", "02", "03", "04", "05", "06", "07",
-                "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24",
-                "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40" }));
-        comboBox_1.setBounds(15, 141, 60, 22);
+        comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35", "36", "37", "38", "39", "40"}));
+        comboBox_1.setBounds(15, 128, 60, 22);
         panel.add(comboBox_1);
 
         JLabel lblNewLabel_4 = new JLabel("Dia (Diciembre 2023)");
         lblNewLabel_4.setFont(new Font("Arial", Font.PLAIN, 12));
-        lblNewLabel_4.setBounds(15, 174, 180, 14);
+        lblNewLabel_4.setBounds(15, 161, 180, 14);
         panel.add(lblNewLabel_4);
 
         JComboBox<String> comboBox_3 = new JComboBox<String>();
-        comboBox_3.setModel(new DefaultComboBoxModel<String>(new String[] { "", "01", "02", "03", "04", "05", "06", "07",
-                "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24",
-                "25", "26", "27", "28", "29", "30", "31" }));
-        comboBox_3.setBounds(15, 194, 60, 22);
+        comboBox_3.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
+        comboBox_3.setBounds(15, 181, 60, 22);
         panel.add(comboBox_3);
 
         JButton btnNewButton_1 = new JButton("Calcular precio");
@@ -120,7 +116,7 @@ public class AerolineaInterface extends JFrame {
                 btnNewButton.setEnabled(true);
             }
         });
-        btnNewButton_1.setBounds(15, 227, 125, 23);
+        btnNewButton_1.setBounds(15, 214, 125, 23);
         panel.add(btnNewButton_1);
     }
 }
