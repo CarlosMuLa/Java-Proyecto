@@ -117,6 +117,9 @@ public class InicioSesion {
 		JButton btnNewButton = new JButton("Registrarse");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				InfoPersonal i = new InfoPersonal();
+				i.setVisible(true);
+				frame.dispose();
 			}
 		});
 		btnNewButton.setBounds(153, 211, 127, 23);

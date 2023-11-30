@@ -121,6 +121,10 @@ public class InfoPersonal extends JFrame {
         panel.add(lblNewLabel);
         
         JButton botonRegresar_1 = new JButton("Regresar");
+        botonRegresar_1.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
         botonRegresar_1.setFont(new Font("Arial", Font.PLAIN, 12));
         botonRegresar_1.setBounds(10, 384, 153, 31);
         panel.add(botonRegresar_1);
