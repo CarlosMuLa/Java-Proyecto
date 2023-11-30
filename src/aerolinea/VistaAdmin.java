@@ -1,81 +1,131 @@
 package aerolinea;
 
-import java.awt.EventQueue;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.table.DefaultTableModel;
 
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTable;
-import javax.swing.JButton;
+public class VistaAdmin extends JFrame {
+    private JFrame frame;
+    private JTable table;
+    private JTable table_1;
+    private JButton btnRegresar;
+    private JButton btnImportarDatos;
+    private JButton btnImportarDatos_1;
 
-public class VistaAdmin {
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    VistaAdmin window = new VistaAdmin();
+                    window.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 
-	private JFrame frame;
-	private JTable table;
-	private JTable table_1;
-	private JButton btnNewButton;
+    public VistaAdmin() {
+        initialize();
+    }
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VistaAdmin window = new VistaAdmin();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+    private void initialize() {
+        setTitle("Vista de Admin");
+        setSize(800, 600);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        getContentPane().setLayout(null);
 
-	/**
-	 * Create the application.
-	 */
-	public VistaAdmin() {
-		initialize();
-	}
+        JLabel lblNewLabel = new JLabel("Vista de Admin");
+        lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 22));
+        lblNewLabel.setBounds(10, 11, 275, 40);
+        getContentPane().add(lblNewLabel);
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
-		
-		JLabel lblNewLabel = new JLabel("Vista de Admin");
-		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 22));
-		lblNewLabel.setBounds(10, 11, 275, 40);
-		frame.getContentPane().add(lblNewLabel);
-		
-        Object[][] data = {
-        		{"Usuario", "Nombre(s)","Apellido paterno", "Apellido Materno"},
-                {1, "Juan", "Perez", "Lopez"}
-        };
-        String[] columnNames = {"Usuario","Nombre(s)","Apellido paterno", "Apellido Materno"};
-		
-		table = new JTable(data, columnNames);
-		table.setFont(new Font("Arial", Font.PLAIN, 12));
-		table.setBounds(52, 62, 331, 32);
-		frame.getContentPane().add(table);
-		
-		Object[][] data_1 = {
-        		{"Usuario", "Destino","Asiento", "Fecha", "Precio"},
-                {1, ".", 1, 5, 25}
-        };
-        String[] columnNames_1 = {"Usuario","Destino","Asiento", "Fecha", "Precio"};
-        
-		table_1 = new JTable(data_1, columnNames_1);
-		table_1.setFont(new Font("Arial", Font.PLAIN, 12));
-		table_1.setBounds(52, 130, 331, 32);
-		frame.getContentPane().add(table_1);
-		
-		btnNewButton = new JButton("Regresar");
-		btnNewButton.setBounds(22, 215, 89, 23);
-		frame.getContentPane().add(btnNewButton);
-	}
+        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel.setColumnIdentifiers(new String[] { "Nombre(s)", "Apellido paterno", "Apellido Materno", "CURP", "Dia", "Mes", "Año", "Sexo", "Pasaporte" });
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setBounds(10, 62, 750, 150);
+        getContentPane().add(scrollPane);
+
+        table = new JTable(tableModel);
+        table.setFont(new Font("Arial", Font.PLAIN, 12));
+        scrollPane.setViewportView(table);
+
+        btnImportarDatos = new JButton("Importar Datos");
+        btnImportarDatos.setBounds(10, 220, 130, 23);
+        getContentPane().add(btnImportarDatos);
+
+        btnImportarDatos.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                importarDatosTabla1();
+            }
+        });
+
+        DefaultTableModel tableModel_1 = new DefaultTableModel();
+        tableModel_1.setColumnIdentifiers(new String[] { "Nombre", "Tarjeta", "Mes", "Año", "CVV" });
+
+        JScrollPane scrollPane_1 = new JScrollPane();
+        scrollPane_1.setBounds(10, 270, 750, 150);
+        getContentPane().add(scrollPane_1);
+
+        table_1 = new JTable(tableModel_1);
+        table_1.setFont(new Font("Arial", Font.PLAIN, 12));
+        scrollPane_1.setViewportView(table_1);
+
+        btnImportarDatos_1 = new JButton("Importar Datos");
+        btnImportarDatos_1.setBounds(10, 430, 130, 23);
+        getContentPane().add(btnImportarDatos_1);
+
+        btnRegresar = new JButton("Regresar");
+        btnRegresar.setBounds(10, 470, 89, 23);
+        getContentPane().add(btnRegresar);
+
+        // Agregar ActionListener al botón de regresar
+        btnRegresar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Código para abrir el JFrame "AdminOUser"
+                AdminOUser adminOUser = new AdminOUser();
+                adminOUser.setVisible(true);
+                // Cerrar el frame actual si es necesario
+                dispose();
+            }
+        });
+    }
+
+    private void importarDatosTabla1() {
+        try {
+            Connection con = Conexion.establecerConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT nombre, apellidoPaterno, apellidoMaterno, curp, dia, mes, anio, sexo, pasaporte FROM InfoBuena");
+            ResultSet rs = ps.executeQuery();
+
+            DefaultTableModel tableModel = (DefaultTableModel) table.getModel();
+            tableModel.setRowCount(0);
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getString("nombre"),
+                    rs.getString("apellidoPaterno"),
+                    rs.getString("apellidoMaterno"),
+                    rs.getString("curp"),
+                    rs.getString("dia"),
+                    rs.getString("mes"),
+                    rs.getString("anio"),
+                    rs.getString("sexo"),
+                    rs.getString("pasaporte")
+                };
+                tableModel.addRow(row);
+            }
+
+            con.close();
+
+        } catch (SQLException e1) {
+            JOptionPane.showMessageDialog(null, e1.toString());
+        }
+    }
 }
