@@ -64,12 +64,12 @@ public class AerolineaInterface {
 		frame.getContentPane().add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Barra");
-		lblNewLabel_1.setIcon(new ImageIcon("C:\\Users\\nicol\\Documents\\GitHub\\Java-Proyecto\\src\\azul-color.png"));
+		lblNewLabel_1.setIcon(new ImageIcon("D:\\Nico\\Programs\\Java-Proyecto\\src\\azul-color.png"));
 		lblNewLabel_1.setBounds(15, 56, 284, 3);
 		frame.getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_5 = new JLabel("Logo");
-		lblNewLabel_5.setIcon(new ImageIcon("C:\\Users\\nicol\\Documents\\GitHub\\Java-Proyecto\\src\\fotomini.jpg"));
+		lblNewLabel_5.setIcon(new ImageIcon("D:\\Nico\\Programs\\Java-Proyecto\\src\\fotomini.jpg"));
 		lblNewLabel_5.setBounds(309, 15, 110, 110);
 		frame.getContentPane().add(lblNewLabel_5);
 		
