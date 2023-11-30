@@ -29,8 +29,8 @@ public class AdminOUser extends JFrame {
 
         usuarioButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                AerolineaInterface aerolineaInterface = new AerolineaInterface();
-                aerolineaInterface.setVisible(true);
+                InicioSesion inicioSesion = new InicioSesion();
+                inicioSesion.setVisible(true);
                 dispose();
             }
         });

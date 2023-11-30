@@ -123,6 +123,9 @@ public class InfoPersonal extends JFrame {
         JButton botonRegresar_1 = new JButton("Regresar");
         botonRegresar_1.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+        		InicioSesion iSesion = new InicioSesion();
+                iSesion.frame.setVisible(true);
+                dispose();
         	}
         });
         botonRegresar_1.setFont(new Font("Arial", Font.PLAIN, 12));

@@ -1,21 +1,23 @@
 package aerolinea;
 
-import java.awt.EventQueue;
-
+import java.awt.*;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.Color;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.SwingConstants;
 
-public class InicioSesion {
+public class InicioSesion extends JFrame {
 
-	private JFrame frame;
+	JFrame frame;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -119,7 +121,8 @@ public class InicioSesion {
 			public void actionPerformed(ActionEvent e) {
 				InfoPersonal i = new InfoPersonal();
 				i.setVisible(true);
-				frame.dispose();
+				frame.setVisible(false);
+				dispose();
 			}
 		});
 		btnNewButton.setBounds(153, 211, 127, 23);
