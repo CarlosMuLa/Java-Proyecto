@@ -11,7 +11,7 @@ public class Avion
 	public Avion (int model)
 	{
 		setModel(model);
-		setCapacidad(model);
+		capacidad = 100;
 		setVelocidad(model);
 	}
 	
@@ -26,30 +26,6 @@ public class Avion
 			modelostr=modelosA[i];
 	}
 	
-	private void setCapacidad(int model)
-	{
-		switch(model)
-		{
-		case 0:
-			capacidad = 149;
-			break;
-		
-		case 1: 
-			capacidad = 240;
-			break;
-		case 2:
-			capacidad = 440;
-			break;
-		case 3:
-			capacidad = 406;
-			break;
-		case 4:
-			capacidad = 660;
-			break;
-		default:
-			capacidad = 149;
-		}
-	}
 	
 	private void setVelocidad(int model)
 	{

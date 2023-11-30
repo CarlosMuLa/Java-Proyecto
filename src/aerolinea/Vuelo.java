@@ -16,9 +16,9 @@ public class Vuelo
 	private Rutas route;
 	private LocalDateTime horallegada;
 	private LocalDateTime horasalida;
-	private Duration cadacuanto;
 	
-	public Vuelo(Rutas ruta,Avion plane, LocalDateTime horasalida, long each)
+	
+	public Vuelo(Rutas ruta,Avion plane, LocalDateTime horasalida)
 	{
 		route = ruta;
 		avion = plane;
@@ -27,7 +27,7 @@ public class Vuelo
 			  boletos.add(null);
 			} 
 		boletoscomprados = new HashSet<>(avion.getCapacidad());
-		cadacuanto = Duration.ofMinutes(each); //cada caunto va a salir este vuelo
+		 //cada caunto va a salir este vuelo
 		this.horasalida = horasalida;
 		horallegada = getHoraLLegada(); //se suma la hora de salida del vuelo a la duracion del vuelo para obtener la hora de llegada
 	}
@@ -38,16 +38,22 @@ public class Vuelo
 		return  horasalida.plus(route.duracionVuelo);
 	}
 	
-	public void comprarBoleto(int index, String nombre, boolean sexo, int edad, String pasaporte, int asiento) {
-	    Boleto nuevoBoleto;
-
-	    if (asiento < 40) {
+	public List<Vuelo> comprarBoleto(List<Rutas> rutas,int index, String nombre, boolean sexo, int edad, String pasaporte, int asiento,Avion plane, LocalDateTime horasalida) {
+	    Boleto nuevoBoleto = new Economico(nombre, sexo, edad, pasaporte, 100);;
+	    List<Vuelo> vuelos = new ArrayList<>();
+	    for(int i =0; i<rutas.size();i++)
+	    {
+	    if (asiento < 40) 
+	    {
 	        nuevoBoleto = new PrimeraClase(nombre, sexo, edad, pasaporte, asiento);
-	    } else if (asiento > 40) {
+	    }
+	    else if (asiento > 40) {
 	        nuevoBoleto = new Economico(nombre, sexo, edad, pasaporte, asiento);
-	    } else {
+	    }
+	    else if (asiento >100)
+	    {
 	        // Lógica para otro tipo de asiento, si es necesario
-	        return;
+	    	nuevoBoleto = new Economico(nombre, sexo, edad, pasaporte, 100);
 	    }
 
 	    // Verificar si el índice es válido y la lista tiene suficientes elementos
@@ -56,9 +62,20 @@ public class Vuelo
 	        boletos.add(index, nuevoBoleto);
 	        // Agregar el nuevo boleto a la lista de boletos comprados
 	        boletoscomprados.add(nuevoBoleto);
-	    } else {
+	    } 
+	    else 
+	    {
 	        System.out.println("Índice no válido o lista sin capacidad suficiente.");
 	    }
+	    
+	    }
+	    //se regresa los vuelos que se compro
+	    for(Rutas ruta : rutas)
+	    {
+	    	vuelos.add(new Vuelo(ruta,plane,horasalida));
+	    }
+	    return vuelos;
+	    //public Vuelo(Rutas ruta,Avion plane, LocalDateTime horasalida, long each)
 	}
 	
 	public String toString()
@@ -71,5 +88,6 @@ public class Vuelo
 		for ( Boleto elemento : boletoscomprados)
                 System.out.println("El pasajero "+elemento.nombrePasajero+" tiene el asiento "+elemento.numAsiento+" de clase "+elemento.tipoBoleto);
 	}
+	
 	
 }

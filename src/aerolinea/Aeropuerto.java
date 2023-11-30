@@ -41,5 +41,10 @@ public class Aeropuerto
 				return false;
 		}
 		
+		public String toString()
+		{
+			return "Aeropuerto " + nombre+" " +codigoAeropuerto;
+		}
+		
 	}
 
