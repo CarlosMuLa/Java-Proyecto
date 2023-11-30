@@ -106,7 +106,6 @@ public class Pagos extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
             	AerolineaInterface a = new AerolineaInterface();
-            	//ir para atras con el boton.
             	a.setVisible(true);
             	dispose();
                 System.out.println("Regresando...");

@@ -82,20 +82,51 @@ public class VistaAdmin extends JFrame {
         btnImportarDatos_1.setBounds(10, 430, 130, 23);
         getContentPane().add(btnImportarDatos_1);
 
+        // Agregar ActionListener al botón de importar datos 1
+        btnImportarDatos_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                importarDatosTabla2();
+            }
+        });
+
         btnRegresar = new JButton("Regresar");
         btnRegresar.setBounds(10, 470, 89, 23);
         getContentPane().add(btnRegresar);
 
-        // Agregar ActionListener al botón de regresar
         btnRegresar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Código para abrir el JFrame "AdminOUser"
                 AdminOUser adminOUser = new AdminOUser();
                 adminOUser.setVisible(true);
-                // Cerrar el frame actual si es necesario
                 dispose();
             }
         });
+    }
+
+    private void importarDatosTabla2() {
+        try {
+            Connection con = Conexion.establecerConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT nombre, tarjeta, mes, anio, StrCVV FROM Pagos_Buena");
+            ResultSet rs = ps.executeQuery();
+
+            DefaultTableModel tableModel_1 = (DefaultTableModel) table_1.getModel();
+            tableModel_1.setRowCount(0);
+
+            while (rs.next()) {
+                Object[] row = {
+                    rs.getString("nombre"),
+                    rs.getString("tarjeta"),
+                    rs.getString("mes"),
+                    rs.getString("anio"),
+                    rs.getString("StrCVV")
+                };
+                tableModel_1.addRow(row);
+            }
+
+            con.close();
+
+        } catch (SQLException e1) {
+            JOptionPane.showMessageDialog(null, e1.toString());
+        }
     }
 
     private void importarDatosTabla1() {
