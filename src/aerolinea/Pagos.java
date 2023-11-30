@@ -1,121 +1,167 @@
 package aerolinea;
-import java.awt.EventQueue;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
-import javax.swing.JInternalFrame;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.ImageIcon;
+public class Pagos extends JFrame {
+    private JTextField nombreTitular;
+    private JTextField numeroTarjeta;
+    private JTextField cvv;
+    private JComboBox<String> comboMes;
+    private JComboBox<String> comboAnio;
 
-public class Pagos extends JInternalFrame {
+    public Pagos() {
+    	
+        setTitle("Pagos");
+        setSize(365, 422);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
-	private static final long serialVersionUID = 1L;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					Pagos frame = new Pagos();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+        JLabel labelTitulo = new JLabel("Pagos");
+        labelTitulo.setBounds(20, 12, 188, 32);
+        labelTitulo.setFont(new Font("Arial Black", Font.PLAIN, 22));
+        panel.add(labelTitulo);
 
-	/**
-	 * Create the frame.
-	 */
-	public Pagos() {
-		setBounds(100, 100, 361, 300);
-		getContentPane().setLayout(null);
+        JLabel labelMetodoPago = new JLabel("Método de Pago");
+        labelMetodoPago.setFont(new Font("Arial", Font.PLAIN, 12));
+        labelMetodoPago.setBounds(20, 54, 188, 32);
+        panel.add(labelMetodoPago);
 
-		JLabel lblNewLabel = new JLabel("Pagos");
-		lblNewLabel.setFont(new Font("Arial Black", Font.PLAIN, 22));
-		lblNewLabel.setBounds(10, 10, 180, 32);
-		getContentPane().add(lblNewLabel);
+        JRadioButton radioCredito = new JRadioButton("Tarjeta de Crédito");
+        radioCredito.setFont(new Font("Arial", Font.PLAIN, 12));
+        radioCredito.setBounds(20, 83, 148, 32);
+        JRadioButton radioDebito = new JRadioButton("Tarjeta de Débito");
+        radioDebito.setFont(new Font("Arial", Font.PLAIN, 12));
+        radioDebito.setBounds(170, 83, 162, 32);
+        ButtonGroup grupoMetodoPago = new ButtonGroup();
+        grupoMetodoPago.add(radioCredito);
+        grupoMetodoPago.add(radioDebito);
+        panel.add(radioCredito);
+        panel.add(radioDebito);
 
-		JLabel lblNewLabel_1 = new JLabel("Método de Pago");
-		lblNewLabel_1.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNewLabel_1.setBounds(10, 43, 114, 22);
-		getContentPane().add(lblNewLabel_1);
+        JLabel labelNombreTitular = new JLabel("Nombre del Titular");
+        labelNombreTitular.setFont(new Font("Arial", Font.PLAIN, 12));
+        labelNombreTitular.setBounds(20, 130, 109, 32);
+        panel.add(labelNombreTitular);
+        nombreTitular = new JTextField();
+        nombreTitular.setBounds(132, 131, 200, 32);
+        panel.add(nombreTitular);
 
-		JRadioButton rdbtnNewRadioButton = new JRadioButton("Tarjeta de Crédito");
-		rdbtnNewRadioButton.setBounds(10, 65, 133, 21);
-		getContentPane().add(rdbtnNewRadioButton);
+        JLabel labelNumeroTarjeta = new JLabel("Número de Tarjeta");
+        labelNumeroTarjeta.setFont(new Font("Arial", Font.PLAIN, 12));
+        labelNumeroTarjeta.setBounds(20, 172, 109, 32);
+        panel.add(labelNumeroTarjeta);
+        numeroTarjeta = new JTextField();
+        numeroTarjeta.setBounds(132, 173, 200, 32);
+        panel.add(numeroTarjeta);
 
-		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("Tarjeta de Débito");
-		rdbtnNewRadioButton_1.setBounds(10, 87, 133, 21);
-		getContentPane().add(rdbtnNewRadioButton_1);
+        JLabel labelFechaVencimiento = new JLabel("Fecha de Vencimiento");
+        labelFechaVencimiento.setFont(new Font("Arial", Font.PLAIN, 12));
+        labelFechaVencimiento.setBounds(20, 214, 129, 32);
+        panel.add(labelFechaVencimiento);
 
-		textField = new JTextField();
-		textField.setBounds(10, 173, 114, 19);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+        comboMes = new JComboBox<>(new String[]{"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"});
+        comboMes.setFont(new Font("Arial", Font.PLAIN, 12));
+        comboMes.setBounds(159, 214, 49, 32);
+        panel.add(comboMes);
 
-		JLabel lblNewLabel_2 = new JLabel("Número de Tarjeta");
-		lblNewLabel_2.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNewLabel_2.setBounds(10, 157, 133, 14);
-		getContentPane().add(lblNewLabel_2);
+        comboAnio = new JComboBox<>(new String[]{"2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033"});
+        comboAnio.setFont(new Font("Arial", Font.PLAIN, 12));
+        comboAnio.setBounds(223, 214, 110, 32);
+        panel.add(comboAnio);
 
-		JLabel lblNewLabel_3 = new JLabel("Fecha de Vencimiento");
-		lblNewLabel_3.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNewLabel_3.setBounds(9, 206, 134, 13);
-		getContentPane().add(lblNewLabel_3);
+        JLabel labelCVV = new JLabel("CVV");
+        labelCVV.setFont(new Font("Arial", Font.PLAIN, 12));
+        labelCVV.setBounds(20, 256, 51, 32);
+        panel.add(labelCVV);
+        cvv = new JTextField();
+        cvv.setBounds(68, 257, 264, 32);
+        panel.add(cvv);
 
-		JLabel lblNewLabel_4 = new JLabel("Nombre del Titular");
-		lblNewLabel_4.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNewLabel_4.setBounds(10, 114, 114, 13);
-		getContentPane().add(lblNewLabel_4);
+        JButton botonPagar = new JButton("Pagar");
+        botonPagar.setBounds(184, 319, 148, 32);
+        botonPagar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (camposVacios()) {
+                    JOptionPane.showMessageDialog(Pagos.this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+                } else {
+                    agregarDatos();
+                }
+            }
+        });
+        
+        panel.add(botonPagar);
 
-		textField_1 = new JTextField();
-		textField_1.setBounds(10, 128, 114, 19);
-		getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+        JButton botonRegresar = new JButton("Regresar");
+        botonRegresar.setBounds(20, 319, 140, 32);
+        botonRegresar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Regresando...");
+            }
+        });
+        panel.add(botonRegresar);
 
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(
-				new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12" }));
-		comboBox.setBounds(10, 229, 43, 21);
-		getContentPane().add(comboBox);
+        getContentPane().add(panel);
 
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(
-				new String[] { "23", "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35" }));
-		comboBox_1.setBounds(65, 229, 43, 21);
-		getContentPane().add(comboBox_1);
+        setVisible(true);
+    }
+    
+    
+    private void agregarDatos() {
+        String nombre = nombreTitular.getText();
+        String tarjeta = numeroTarjeta.getText();
+        String mes = (String) comboMes.getSelectedItem();
+        String anio = (String) comboAnio.getSelectedItem();
+        String StrCVV = cvv.getText();
 
-		JLabel lblNewLabel_5 = new JLabel("CVV");
-		lblNewLabel_5.setFont(new Font("Arial", Font.PLAIN, 12));
-		lblNewLabel_5.setBounds(170, 176, 45, 13);
-		getContentPane().add(lblNewLabel_5);
+        if (!nombre.isEmpty() && !tarjeta.isEmpty() && !mes.isEmpty() && !anio.isEmpty() && !StrCVV.isEmpty()) {
+            try {
+                try (Connection conexion = Conexion.establecerConexion();
+                     PreparedStatement ps = conexion.prepareStatement("INSERT INTO Pagos_Buena (nombre, tarjeta, mes, anio, StrCVV) VALUES (?,?,?,?,?)")) {
 
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(170, 192, 60, 19);
-		getContentPane().add(textField_2);
+                    ps.setString(1, nombre);
+                    ps.setString(2, tarjeta);
+                    ps.setString(3, mes);
+                    ps.setString(4, anio);
+                    ps.setString(5, StrCVV);
 
-		JButton btnNewButton = new JButton("Pagar");
-		btnNewButton.setBounds(166, 229, 85, 21);
-		getContentPane().add(btnNewButton);
-		
-		JLabel lblNewLabel_6 = new JLabel("New label");
-		lblNewLabel_6.setIcon(new ImageIcon("C:\\Users\\rober\\OneDrive\\Desktop\\fotobuena.jpg"));
-		lblNewLabel_6.setBounds(170, 24, 149, 147);
-		getContentPane().add(lblNewLabel_6);
-	}
+                    int filasAfectadas = ps.executeUpdate();
+
+                    if (filasAfectadas > 0) {
+                        JOptionPane.showMessageDialog(this, "Datos agregados correctamente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Error al insertar datos en la base de datos", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Error al ejecutar la inserción en la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Por favor, ingresa un valor numérico válido para el celular y la edad", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> new Pagos());
+    }
+    
+    private boolean camposVacios() {
+        return nombreTitular.getText().isEmpty() || numeroTarjeta.getText().isEmpty() ||
+                comboMes.getSelectedItem().toString().isEmpty() || comboAnio.getSelectedItem().toString().isEmpty() ||
+                cvv.getText().isEmpty();
+    }
+    
 }
