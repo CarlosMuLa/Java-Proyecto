@@ -30,7 +30,7 @@ public class AdminOUser extends JFrame {
         usuarioButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 InicioSesion inicioSesion = new InicioSesion();
-                inicioSesion.setVisible(true);
+                inicioSesion.frame.setVisible(true);
                 dispose();
             }
         });
