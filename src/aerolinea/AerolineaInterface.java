@@ -21,6 +21,8 @@ public class AerolineaInterface extends JFrame {
 
     private JTextField textField;
     private List<Rutas> rutas;
+    int indexselecionado;
+
     
 
     public static void main(String[] args) {
@@ -232,7 +234,7 @@ public class AerolineaInterface extends JFrame {
         panel.add(lblNewLabel_6);
 
         textField = new JTextField();
-        textField.setEditable(false);
+        textField.setEditable(true);
         textField.setBounds(302, 183, 110, 20);
         panel.add(textField);
         textField.setColumns(10);
@@ -249,7 +251,7 @@ public class AerolineaInterface extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 // Acceder al elemento seleccionado en el JComboBox
                 Rutas rutaSeleccionada = (Rutas) comboBox.getSelectedItem();
-
+                indexselecionado =comboBox.getSelectedIndex(); 
                 // Verificar si se seleccionó una ruta
                 if (rutaSeleccionada != null) {
                     // Obtener y mostrar los nombres completos
@@ -289,7 +291,8 @@ public class AerolineaInterface extends JFrame {
         btnNewButton_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 btnNewButton.setEnabled(true);
-                //textField.setText()
+                
+               textField.setText(String.valueOf(rutasdisponibles.get(indexselecionado).getPrecio()));
                 
                 
             }
