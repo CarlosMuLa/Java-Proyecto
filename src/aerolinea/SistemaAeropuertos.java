@@ -26,6 +26,7 @@ public class SistemaAeropuertos
 		Map<Aeropuerto, Integer> gScore = new HashMap<>();
 		//el fscore almacena el valor de la suma del G score y el H score, mas adelante se explicara que es el hscore.
 		Map<Aeropuerto, Integer> fScore = new HashMap<>();
+		Map<Aeropuerto, Aeropuerto> aeropuertosCerca = new HashMap<>();
 		//open set son los aeropuertos que todavia falta de explorar
 		//PriorityQueue<Aeropuerto>: Está creando una cola de prioridad que contendrá objetos de tipo Aeropuerto.
 		//En este contexto, cada aeropuerto representa un nodo en el grafo que estamos explorando.
@@ -45,31 +46,33 @@ public class SistemaAeropuertos
 			//cuando ya llegue al destino 
 			if(actual.equals(destino))
 			{
-				
-				for(Rutas reconstruccion: reconstruirCamino(origen,destino,rutasdisponibles))
+				System.out.println(reconstruirCamino(origen,destino,rutas));
+
+				for(Rutas reconstruccion: reconstruirCamino(origen,destino,rutas));
 				{
-					System.out.println(reconstruccion);
+					//System.out.println(reconstruccion);
 				}
-				return reconstruirCamino(origen,destino,rutasdisponibles);
+				return reconstruirCamino(origen,destino,rutas);
+
 			}
+			System.out.println(obtenerRutasDesde(actual, rutas));
 			for (Rutas ruta : obtenerRutasDesde(actual, rutas)) 
 			{
-				System.out.println(ruta);
-				System.out.println("------");
 			    Set<Aeropuerto> vecinos = obtenerVecinos(ruta.getDestinoAe(), rutas);
-			    System.out.println(vecinos);
-			    System.out.println("sexoreobtener rutas");
+			    System.out.println(vecinos.size());			   
 			    for (Aeropuerto vecino : vecinos) {
 			        int tentativeGScore = gScore.getOrDefault(actual, Integer.MAX_VALUE) + ruta.distanciakm;
-			        System.out.println("tentative score");
+			       
 			        if (tentativeGScore < gScore.getOrDefault(vecino, Integer.MAX_VALUE)) {
 			            // Este es un nuevo camino más corto
-			        	System.out.println("ifsexoreconstruir camino");
 			            gScore.put(vecino, tentativeGScore);
 			            fScore.put(vecino, tentativeGScore + heuristica(vecino, destino, rutas));
 
 			            if (!openSet.contains(vecino)) {
 			                openSet.add(vecino);
+			                System.out.println("-----openSet------");
+
+			                System.out.println(openSet);
 						}
 				}
 		
@@ -84,7 +87,7 @@ public class SistemaAeropuertos
 		{
 	    for (Rutas ruta : rutasPredefinidas) 
 	    {
-	        if (ruta.getOrigen().equals(origen.getCodigoAeropuerto()) && ruta.getDestino().equals(destino.getCodigoAeropuerto())) 
+	        if (ruta.getOrigenCodigo().equals(origen.getCodigoAeropuerto()) && ruta.getDestinoCodigo().equals(destino.getCodigoAeropuerto())) 
 	            return ruta.getPrecio();
 	    }
 	    // No hay una ruta directa, devolver un valor alto o infinito
@@ -95,39 +98,44 @@ public class SistemaAeropuertos
         List<Rutas> rutasDesdeOrigen = new ArrayList<>();
 
         for (Rutas ruta : rutasPredefinidas) {
-            if (ruta.getOrigen().equals(origen.getCodigoAeropuerto())) {
-                rutasDesdeOrigen.add(ruta);
-            }
+            if (ruta.getOrigenCodigo().equals(origen.getCodigoAeropuerto())) 
+            	rutasDesdeOrigen.add(ruta);
         }
+        System.out.println(rutasDesdeOrigen);
+
         return rutasDesdeOrigen;
     }
 	
 	
-    public Set<Aeropuerto> obtenerVecinos(Aeropuerto aeropuerto, List<Rutas> rutasPredefinidas) {
-        Set<Aeropuerto> vecinos = new HashSet<>();
-        for (Rutas ruta : rutasPredefinidas)
-        {
-        	//System.out.println(ruta.getOrigen());
-        	//System.out.println(aeropuerto.getCodigoAeropuerto());
-            if (ruta.getOrigen().equals(aeropuerto.getCodigoAeropuerto())) {
-                Aeropuerto destino = obtenerAeropuertoPorCodigo(ruta.getDestino());
-                if (destino != null) {
-                    vecinos.add(destino);
-                }
-            }
-        }
-        return vecinos;
-    }
+	public Set<Aeropuerto> obtenerVecinos(Aeropuerto aeropuerto, List<Rutas> rutasPredefinidas) {
+	    Set<Aeropuerto> vecinos = new HashSet<>();
 
-	private Aeropuerto obtenerAeropuertoPorCodigo(String codigo) 
-	{
-	    for (Aeropuerto aeropuerto : listaDeAeropuertos) { // Asume que tienes una lista de aeropuertos
-	        if (aeropuerto.getCodigoAeropuerto().equals(codigo)) {
-	            return aeropuerto;
+	    for (Rutas ruta : rutasPredefinidas) {
+	        if (ruta.getOrigenCodigo().equals(aeropuerto.getCodigoAeropuerto())) {
+	            Aeropuerto destino = obtenerAeropuertoPorCodigo(ruta.getDestinoAe().getCodigoAeropuerto(), rutasPredefinidas);
+	            if (destino != null) {
+	                System.out.println("destino " + destino);
+	                vecinos.add(destino);
+	            }
 	        }
 	    }
-	    return null; // Manejo si el aeropuerto no se encuentra (ajustar según tus necesidades)
+        System.out.println("destino " + vecinos);
+
+	    return vecinos;
 	}
+
+	  private Aeropuerto obtenerAeropuertoPorCodigo(String codigo, List<Rutas> rutasPredefinidas) 
+	  {
+	      for (Rutas ruta : rutasPredefinidas) {
+	          if (ruta.getOrigenAe().getCodigoAeropuerto().equals(codigo)) {
+	              return ruta.getOrigenAe();
+	          }
+	          if (ruta.getDestinoAe().getCodigoAeropuerto().equals(codigo)) {
+	              return ruta.getDestinoAe();
+	          }
+	      }
+	      return null; // Manejo si el aeropuerto no se encuentra (ajustar según tus necesidades)
+	  }
 	
 	
 	private List<Rutas> reconstruirCamino(Aeropuerto origen, Aeropuerto destino, List<Rutas> rutasPredefinidas) {
@@ -154,7 +162,7 @@ public class SistemaAeropuertos
 	}
 	private Rutas encontrarRutaEntreAeropuertos(Aeropuerto origen, Aeropuerto destino, List<Rutas> rutasDisponibles) {
 	    for (Rutas ruta : rutasDisponibles) {
-	        if (ruta.getOrigen().equals(origen.getCodigoAeropuerto()) && ruta.getDestino().equals(destino.getCodigoAeropuerto())) {
+	        if (ruta.getOrigenCodigo().equals(origen.getCodigoAeropuerto()) && ruta.getDestinoCodigo().equals(destino.getCodigoAeropuerto())) {
 	            // Se encontró la ruta deseada
 	            return ruta;
 	        }
@@ -164,6 +172,14 @@ public class SistemaAeropuertos
 	    // En este ejemplo, devolvemos null.
 	    return null;
 	}
+	
+	/*
+	 * private Map<Aeropuerto, Aeropuerto> agregarAeropuerto(List<Rutas> ruta) {
+	 * Map<Aeropuerto, Aeropuerto> aeropuertosCerca = new HashMap<>();
+	 * 
+	 * for(Rutas a: ruta) {
+	 * aeropuertosCerca.entrySet(a.getOrigenAe(),a.getDestinoAe()); } }
+	 */
 	
 	
 	

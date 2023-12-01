@@ -175,8 +175,9 @@ public class InfoPersonal extends JFrame {
         String dia = (String) diaComboBox.getSelectedItem();
         String mes = (String) mesComboBox.getSelectedItem();
         String anio = (String) anioComboBox.getSelectedItem();
+        int anoscump = 2023-Integer.parseInt(anio);
         String fechaNacimiento = dia + "/" + mes + "/" + anio;
-
+        boolean sexobool = ( sexoComboBox.getSelectedIndex()==0 ? true:false);
         String sexo = (String) sexoComboBox.getSelectedItem();
         String pasaporte = pasaporteField.getText();
 
@@ -212,6 +213,9 @@ public class InfoPersonal extends JFrame {
         } else {
             JOptionPane.showMessageDialog(InfoPersonal.this, "Todos los campos son obligatorios", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        //	protected Boleto(String nombrePas, Boolean sex, int edad, String pasaporte, int asiento)
+
+       // Boleto b1 = new Boleto(nombre,sexobool,anoscump,pasaporte
     }
 
 

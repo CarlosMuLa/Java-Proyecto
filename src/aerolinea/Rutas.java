@@ -25,12 +25,12 @@ public class Rutas
 	}
 	
 	
-	public String getOrigen()
+	public String getOrigenCodigo()
 	{
 		return origen.getCodigoAeropuerto();
 	}
 	
-	public String getDestino()
+	public String getDestinoCodigo()
 	{
 		return destino.getCodigoAeropuerto();
 	}
@@ -46,7 +46,7 @@ public class Rutas
 	}
 	public Aeropuerto getDestinoAe()
 	{
-		return origen;
+		return destino;
 	}
 	public Duration getCadaCuanto()
 	{
@@ -55,7 +55,20 @@ public class Rutas
 	
 	public String toString()
 	{
-		return "El vuelo saldria de "+ origen+" y llegaria a "+destino+" con duracion de "+duracionVuelo;
+		return getOrigenCodigo()+" -> "+getDestinoCodigo();
 	}
+	public String getOrigenNombre()
+	{
+		return origen.getNombre();
+	}
+	public String getDestinoNombre()
+	{
+		return destino.getNombre();
+	}
+	public String obtenerNombresCompletos()
+	{
+		return origen.getNombre()+" -> "+destino.getNombre();
+	}
+
 
 }
